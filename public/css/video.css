@@ -15,8 +15,10 @@ body {
     color: white;
 }
 
+
+/*Added phone functionality*/
 .div-space{
-    height: 25vh; /* Space for the top controls */
+    height: 9vh; /* Space for the top controls */
 }
 
 /* Space Background */

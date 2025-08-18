@@ -103,11 +103,14 @@
                     <div class="time-display" id="timeDisplayMobile">
                         0:00 / 0:00
                     </div>
+	            <button class="control-btn" onclick="toggleFullscreen()" id="fullscreenBtnMobile">
+                        <i class="fas fa-expand"></i>
+                    </button>
+
                     <button class="control-btn volume-toggle" onclick="toggleMute()" id="muteBtnMobile">
                         <i class="fas fa-volume-up"></i>
                     </button>
                 </div>
-
                 <!-- Middle Row: Main Playback Controls -->
                 <div class="mobile-controls-middle">
                     <button class="control-btn" onclick="skipBackward()" title="Skip 10s backward">
@@ -127,11 +130,8 @@
                     <button class="control-btn" onclick="downloadVideo()" title="Download Video">
                         <i class="fas fa-download"></i>
                     </button>
-                    <button class="control-btn" onclick="toggleFullscreen()" id="fullscreenBtnMobile">
-                        <i class="fas fa-expand"></i>
-                    </button>
                 </div>
-                <div class="div-space"></div>
+		<div class="div-space"></div>
             </div>
         </div>
     </div>

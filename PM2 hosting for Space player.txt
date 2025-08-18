@@ -1,0 +1,53 @@
+SPACE PLAYER - HOW TO RUN
+============================
+
+PREREQUISITES
+-------------
+✓ Linux server (Debian recommended)
+✓ PM2 installed: npm install -g pm2
+✓ Node.js and npm installed
+
+STEP-BY-STEP SETUP
+------------------
+
+1. NAVIGATE TO PROJECT DIRECTORY
+   
+   cd spaceplayer/public
+
+2. START PM2 INSTANCE
+   
+   pm2 serve . 8080 --name "space-player"
+   
+   IMPORTANT: Make sure these files are connected to PM2:
+   • index.html
+   • admin.html
+   • video.html
+   REMEMBER THE PORT NUMBER (8080 in this example)
+
+3. FIND YOUR SERVER IP ADDRESS
+   
+   ip addr show | grep "inet "
+   Look for your local network IP (starts with 192.168.x.x)
+
+4. ACCESS THE APPLICATION
+   
+   Open browser and go to:
+   http://YOUR_IP_ADDRESS:YOUR_PORT
+   Example: http://192.168.1.100:8080
+
+QUICK MANAGEMENT COMMANDS
+-------------------------
+
+Check status:        pm2 status
+View logs:           pm2 logs space-player
+Restart:             pm2 restart space-player
+Stop:                pm2 stop space-player
+
+ACCESS POINTS
+-------------
+Main Interface:      http://YOUR_IP:PORT/index.html
+Admin Panel:         http://YOUR_IP:PORT/admin.html
+Video Player:        http://YOUR_IP:PORT/video.html
+
+DONE! Your Space Player is now running on your local network.
+═══════════════════════════════════════════════════════════════
