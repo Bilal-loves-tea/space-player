@@ -51,3 +51,4 @@ Video Player:        http://YOUR_IP:PORT/video.html
 
 DONE! Your Space Player is now running on your local network.
 ═══════════════════════════════════════════════════════════════
+Although sometimes you might need to manage files like when the site goes down while uploading, so the file just stays there and eventually this will build up and take storage, so in order to manage it I would recommend setting up a WinSCP instance just in case. 
