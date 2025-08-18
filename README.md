@@ -5,7 +5,6 @@ I private LAN video sharing website that I build from the ground up.
 This video player has full offline multimedia function, designed to be the offline-YouTube for people who want a Video service website. All assets are already in the file, no need for long customizing according to your system. 
 Now on the topic of how to host this in your server, already there is a written guide in the files. But if you want the TLDR; using PM2. Features will be listed below.
 
-
 SPACE PLAYER - FEATURES
 ========================
 
@@ -58,6 +57,7 @@ NETWORK CAPABILITIES
 ✓ Multi-device Access - Share across network devices
 ✓ No Internet Required - Fully offline functionality
 ✓ Custom Port Configuration - Flexible hosting options
+
 
 
 That's it. Finally I want to give the biggest contributer of this project Claud a big thanks for helping me out on this project.
