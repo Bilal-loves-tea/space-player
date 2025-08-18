@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Player - Admin Portal</title>
+    <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body>
+    <div class="space-particles" id="spaceParticles"></div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-form">
+            <h2>Admin Login</h2>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter password">
+            </div>
+            <div class="login-actions">
+                <button class="login-btn" onclick="attemptLogin()">Login</button>
+                <button class="cancel-btn" onclick="cancelLogin()">Cancel</button>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="index.html" class="logo">Space Player</a>
+                <div class="admin-badge">ADMIN</div>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="showStats()">Dashboard</button>
+                <button class="header-btn logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Admin Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number" id="totalVideos">0</span>
+                <span class="stat-label">Total Videos</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="storageUsed">0MB</span>
+                <span class="stat-label">Storage Used</span>
+            </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h3>Upload New Video</h3>
+            <form id="uploadForm" class="upload-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="videoFile">Video File: <span class="required">*</span></label>
+                        <div class="file-input-container">
+                            <input type="file" id="videoFile" accept="video/*" required>
+                            <label for="videoFile" class="file-input-label">
+                                <span class="file-icon">🎥</span>
+                                <span class="file-text">Choose Video File</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="thumbnailFile">Thumbnail: <span class="optional">(Optional - defaults to SpacePlayer.png)</span></label>
+                        <div class="file-input-container">
+                            <input type="file" id="thumbnailFile" accept="image/*">
+                            <label for="thumbnailFile" class="file-input-label">
+                                <span class="file-icon">🖼️</span>
+                                <span class="file-text">Choose Thumbnail</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="videoTitle">Title: <span class="required">*</span></label>
+                        <input type="text" id="videoTitle" placeholder="Enter video title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoDuration">Duration: <span class="required">*</span></label>
+                        <input type="text" id="videoDuration" placeholder="MM:SS" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="videoDescription">Description:</label>
+                    <textarea id="videoDescription" placeholder="Enter video description" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="videoCategory">Category: <span class="optional">(Optional - defaults to "Not Categorized")</span></label>
+                        <select id="videoCategory">
+                            <option value="">Select Category</option>
+                            <option value="Educational">Educational</option>
+                            <option value="Documentary">Documentary</option>
+                            <option value="Animation">Animation</option>
+                            <option value="Live">Live Footage</option>
+                            <option value="Movies">Movies</option>
+                            <option value="Not Categorized">Not Categorized</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="upload-btn">Upload Video</button>
+            </form>
+        </div>
+
+        <!-- Video Management -->
+        <div class="video-management">
+            <div class="section-header">
+                <h3 class="section-title">Video Management</h3>
+                <div class="controls">
+                    <input type="text" id="searchInput" placeholder="Search videos..." class="search-input">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="Educational">Educational</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Live">Live Footage</option>
+                        <option value="Movies">Movies</option>
+                        <option value="Not Categorized">Not Categorized</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="video-list" id="videoList">
+                <!-- Videos will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Modal -->
+    <div class="edit-modal" id="editModal">
+        <div class="edit-form">
+            <h3>Edit Video</h3>
+            <form id="editVideoForm">
+                <div class="form-group">
+                    <label for="editTitle">Title:</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="editDescription">Description:</label>
+                    <textarea id="editDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editCategory">Category:</label>
+                    <select id="editCategory" required>
+                        <option value="Educational">Educational</option>
+                        <option value="Documentary">Documentary</option>
+                        <option value="Animation">Animation</option>
+                        <option value="Live">Live Footage</option>
+                        <option value="Movies">Movies</option>
+                        <option value="Not Categorized">Not Categorized</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editDuration">Duration:</label>
+                    <input type="text" id="editDuration" required>
+                </div>
+                <div class="form-group">
+                    <label for="newThumbnail">New Thumbnail (optional):</label>
+                    <div class="file-input-container">
+                        <input type="file" id="newThumbnail" accept="image/*">
+                        <label for="newThumbnail" class="file-input-label">
+                            <span class="file-icon">🖼️</span>
+                            <span class="file-text">Choose New Thumbnail</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="edit-actions">
+                    <button type="submit" class="save-btn">Save Changes</button>
+                    <button type="button" class="cancel-btn" onclick="closeEditModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./js/admin.js"></script>
+
+    <footer class="footer">
+        <div class="footer-contact">
+            Space Player Admin - Contact: <a href="mailto:bilalirshad2020@outlook.com" class="footer-email">bilalirshad2020@outlook.com</a>
+        </div>
+    </footer>
+
+</body>
+</html>

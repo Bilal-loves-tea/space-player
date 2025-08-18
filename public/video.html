@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Player - Video Theatre</title>
+    <link rel="stylesheet" href="/Assets/Icons/fontawesome-free-7.0.0-web/css/all.min.css">
+    <link rel="stylesheet" href="css/video.css">
+</head>
+<body>
+    <div class="space-particles" id="spaceParticles"></div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="spinner"></div>
+        <p>Loading video from the galaxy...</p>
+    </div>
+
+    <!-- Error Screen -->
+    <div id="errorScreen" class="error-screen" style="display: none;">
+        <div class="error-content">
+            <h2>Houston, we have a problem!</h2>
+            <p>Unable to load this video from the cosmic database.</p>
+            <button onclick="window.location.href=`http://192.168.1.100:3001/index.html`" class="back-home-btn">Return to Home Base</button>
+        </div>
+    </div>
+
+    <div class="theatre-container" id="theatreContainer" style="display: none;">
+        <!-- Top Controls -->
+        <div class="top-controls">
+            <a href="http://192.168.1.100:3001/index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <div class="video-title-header" id="videoTitleHeader">
+                Loading...
+            </div>
+            <div class="top-actions">
+                <button class="info-toggle" onclick="toggleInfo()" title="Video Details">
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Video Player -->
+        <div class="video-player">
+            <video id="videoElement" preload="metadata" style="display: none;" controlslist="nodownload nofullscreen noremoteplayback" disablepictureinpicture>
+                <source id="videoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="video-placeholder" id="videoPlaceholder">
+                <div class="play-button" onclick="startVideo()">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="bottom-controls">
+            <div class="progress-container" onclick="seekVideo(event)">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <!-- Desktop Control Panel -->
+            <div class="control-panel desktop-controls">
+                <div class="left-controls">
+                    <button class="control-btn" onclick="playPause()" id="playPauseBtn">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="control-btn" onclick="skipBackward()" title="Skip 10s backward">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button class="control-btn" onclick="skipForward()" title="Skip 10s forward">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                    <div class="volume-container">
+                        <button class="control-btn" onclick="toggleMute()" id="muteBtn">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <input type="range" class="volume-slider" min="0" max="100" value="75" onchange="changeVolume(this.value)">
+                    </div>
+                </div>
+
+                <div class="time-display" id="timeDisplay">
+                    0:00 / 0:00
+                </div>
+
+                <div class="right-controls">
+                    <button class="control-btn" onclick="downloadVideo()" title="Download Video">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="control-btn" onclick="changePlaybackSpeed()" id="speedBtn">1x</button>
+                    <button class="control-btn" onclick="toggleFullscreen()" id="fullscreenBtn">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Control Panel -->
+            <div class="control-panel mobile-controls">
+                <!-- Top Row: Time and Volume -->
+                <div class="mobile-controls-top">
+                    <div class="time-display" id="timeDisplayMobile">
+                        0:00 / 0:00
+                    </div>
+                    <button class="control-btn volume-toggle" onclick="toggleMute()" id="muteBtnMobile">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+
+                <!-- Middle Row: Main Playback Controls -->
+                <div class="mobile-controls-middle">
+                    <button class="control-btn" onclick="skipBackward()" title="Skip 10s backward">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button class="control-btn primary-control" onclick="playPause()" id="playPauseBtnMobile">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button class="control-btn" onclick="skipForward()" title="Skip 10s forward">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                </div>
+
+                <!-- Bottom Row: Secondary Controls -->
+                <div class="mobile-controls-bottom">
+                    <button class="control-btn" onclick="changePlaybackSpeed()" id="speedBtnMobile">1x</button>
+                    <button class="control-btn" onclick="downloadVideo()" title="Download Video">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="control-btn" onclick="toggleFullscreen()" id="fullscreenBtnMobile">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+                <div class="div-space"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-panel" id="infoPanel">
+        <div class="info-header">
+            <div class="info-title">Video Details</div>
+            <button class="close-info" onclick="closeInfo()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="info-section">
+            <h3><i class="fas fa-video"></i> Description</h3>
+            <p id="videoDescription">Loading description...</p>
+        </div>
+
+        <div class="info-stats">
+            <div class="stat-item">
+                <div class="stat-number" id="videoDuration">0:00</div>
+                <div class="stat-label">Duration</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="videoViews">0</div>
+                <div class="stat-label">Views</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="uploadDate">-</div>
+                <div class="stat-label">Upload Date</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="videoCategory">-</div>
+                <div class="stat-label">Category</div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3><i class="fas fa-calendar-alt"></i> Upload Information</h3>
+            <p><strong>Upload Date:</strong> <span id="fullUploadDate">Loading...</span></p>
+            <p><strong>Category:</strong> <span id="fullCategory">Loading...</span></p>
+            <p><strong>File Name:</strong> <span id="fileName">Loading...</span></p>
+            <p><strong>Video ID:</strong> <span id="videoId">Loading...</span></p>
+        </div>
+
+        <div class="info-section" id="relatedSection">
+            <h3><i class="fas fa-film"></i> Related Videos</h3>
+            <div class="related-videos" id="relatedVideos">
+                <div class="related-loading">Loading related videos...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/video.js"></script>
+</body>
+</html>
