@@ -58,7 +58,15 @@ NETWORK CAPABILITIES
 ✓ No Internet Required - Fully offline functionality
 ✓ Custom Port Configuration - Flexible hosting options
 
+Final note: Before you upload to the server you need to change the IP to your computer's IP, also it would help to change the IP from DHCP to static.
+
+1. video.html
+2. index.html
+3. video.js
+4. admin.js
+(Use the find and replace function on these file, and replace http://192.168.1.100:3001 with your own hosting IP and port) 
 
 
 That's it. Finally I want to give the biggest contributer of this project Claud a big thanks for helping me out on this project.
+
 ═══════════════════════════════════════════════════════════════
